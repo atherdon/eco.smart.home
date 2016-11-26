@@ -1,38 +1,15 @@
 var express = require('express');
 var bodyparser = require('body-parser');
 var connection = require('./connection');
-var routes = require('./routes');
-var jwt = require('jsonwebtoken');
 var app = express();
 
-// CORS middleware
-// var allowCrossDomain = function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-//
-//     var token = req.headers['authorization'];
-//
-//     if (!token){
-//       res.send({status: false, message: 'No token provided'})
-//     }
-//     else {
-//       jwt.verify(token, 'yangPentingPanjang', function(err, decoded) {
-//         if (err){
-//           res.send({status: false, message: 'Token authorization failed'});
-//         }
-//         else {
-//           var decoded = jwt.verify(token, 'yangPentingPanjang');
-//           var nim = decoded.nim;
-//           var username = decoded.username;
-//
-//           exports.decoded = decoded;
-//           next();
-//         }
-//       });
-//     }
-//
-// }
+var perangkatRoutes = require('./routes/perangkat');
+var dataRoutes = require('./routes/data');
+var batteryRoutes = require('./routes/battery');
+var userRoutes = require('./routes/user');
+var tdlRoutes = require('./routes/tdl');
+var statusRoutes = require('./routes/status');
+var safeRoutes = require('./routes/safe');
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -44,14 +21,21 @@ app.use(function (req, res, next) {
 
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
-// app.use(allowCrossDomain);
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
 connection.init();
-routes.configure(app);
+
+// ROUTES
+perangkatRoutes.configure(app);
+dataRoutes.configure(app);
+batteryRoutes.configure(app);
+userRoutes.configure(app);
+tdlRoutes.configure(app);
+statusRoutes.configure(app);
+safeRoutes.configure(app);
 
 var server = app.listen(2016, function() {
   console.log('Server listening on port ' + server.address().port);

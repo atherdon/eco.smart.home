@@ -1,12 +1,10 @@
 var connection = require('../connection');
-var jwt = require('jsonwebtoken');
-var _ = require('../app');
 
-function Todo() {
+function User() {
 
   this.get = function(res) {
     connection.acquire(function(err, con) {
-      con.query('select * from perangkat', function(err, result) {
+      con.query('select * from user', function(err, result) {
         con.release();
         res.send(result);
       });
@@ -15,8 +13,8 @@ function Todo() {
 
   this.post = function(req, res) {
     connection.acquire(function(err, con) {
-      var creds = [req.id_perangkat, req.id_user, req.id_rumah, req.nama_perangkat];
-      var query = 'insert into perangkat (id_perangkat, id_user, id_rumah, nama_perangkat) values (?, ?, ?, ?, ?)';
+      var creds = [req.kategori_user, req.nama_user, req.email, req.password, req.id_rumah, req.daya, req.status_notif, req.sleep_time, req.wake_time];
+      var query = 'insert into user (kategori_user, nama_user, email, password, id_rumah, daya, status_notif, sleep_time, wake_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
       con.query(query, creds, function(err, result) {
         con.release();
@@ -32,8 +30,8 @@ function Todo() {
 
   this.update = function(req, res) {
     connection.acquire(function(err, con) {
-      var creds = [req.nama_perangkat, req.id_perangkat];
-      var query = 'update perangkat set nama_perangkat = ? where id_perangkat = ?';
+      var creds = [req.kategori_user, req.nama_user, req.email, req.password, req.id_rumah, req.daya, req.status_notif, req.sleep_time, req.wake_time];
+      var query = 'update user set kategori_user = ?, nama_user = ?, email = ?, password = ?, id_rumah = ?, daya = ?, status_notif = ?, sleep_time = ?, wake_time = ? where id_user = ?';
 
       con.query(query, creds, function(err, result) {
         con.release();
@@ -49,7 +47,7 @@ function Todo() {
 
   this.delete = function(id, res) {
     connection.acquire(function(err, con) {
-      con.query('delete from perangkat where id_perangkat = ?', [id], function(err, result) {
+      con.query('delete from user where id_user = ?', [id], function(err, result) {
         con.release();
 
         if (err) {
@@ -63,4 +61,4 @@ function Todo() {
 
 }
 
-module.exports = new Todo();
+module.exports = new User();

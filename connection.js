@@ -5,10 +5,10 @@ function Connection() {
 
   this.init = function() {
     this.pool = mysql.createPool({
-      host: 'agungdp.agri.web.id',
-      user: 'agungdp_iotpln',
-      password: 'iotpln2016',
-      database: 'agungdp_iotpln'
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'iot_pln'
     });
   };
 

@@ -1,10 +1,10 @@
 var connection = require('../connection');
 
-function Perangkat() {
+function Status() {
 
   this.get = function(res) {
     connection.acquire(function(err, con) {
-      con.query('select * from perangkat', function(err, result) {
+      con.query('select * from status_perangkat', function(err, result) {
         con.release();
         res.send(result);
       });
@@ -13,8 +13,8 @@ function Perangkat() {
 
   this.post = function(req, res) {
     connection.acquire(function(err, con) {
-      var creds = [req.id_perangkat, req.id_user, req.id_rumah, req.nama_perangkat];
-      var query = 'insert into perangkat (id_perangkat, id_user, id_rumah, nama_perangkat) values (?, ?, ?, ?, ?)';
+      var creds = [req.id_perangkat, req.id_user, req.status];
+      var query = 'insert into status_perangkat (id_perangkat, id_user, status) values (?, ?, ?)';
 
       con.query(query, creds, function(err, result) {
         con.release();
@@ -30,8 +30,8 @@ function Perangkat() {
 
   this.update = function(req, res) {
     connection.acquire(function(err, con) {
-      var creds = [req.nama_perangkat, req.id_perangkat];
-      var query = 'update perangkat set nama_perangkat = ? where id_perangkat = ?';
+      var creds = [req.status, req.id_perangkat];
+      var query = 'update status_perangkat set status = ? where id_perangkat = ?';
 
       con.query(query, creds, function(err, result) {
         con.release();
@@ -47,7 +47,7 @@ function Perangkat() {
 
   this.delete = function(id, res) {
     connection.acquire(function(err, con) {
-      con.query('delete from perangkat where id_perangkat = ?', [id], function(err, result) {
+      con.query('delete from status_perangkat where id_perangkat = ?', [id], function(err, result) {
         con.release();
 
         if (err) {
@@ -61,4 +61,4 @@ function Perangkat() {
 
 }
 
-module.exports = new Perangkat();
+module.exports = new Status();

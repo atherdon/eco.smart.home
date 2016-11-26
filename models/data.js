@@ -1,10 +1,10 @@
 var connection = require('../connection');
 
-function Perangkat() {
+function Data() {
 
   this.get = function(res) {
     connection.acquire(function(err, con) {
-      con.query('select * from perangkat', function(err, result) {
+      con.query('select * from data', function(err, result) {
         con.release();
         res.send(result);
       });
@@ -13,8 +13,8 @@ function Perangkat() {
 
   this.post = function(req, res) {
     connection.acquire(function(err, con) {
-      var creds = [req.id_perangkat, req.id_user, req.id_rumah, req.nama_perangkat];
-      var query = 'insert into perangkat (id_perangkat, id_user, id_rumah, nama_perangkat) values (?, ?, ?, ?, ?)';
+      var creds = [req.id_perangkat, req.id_user, req.id_rumah, req.pemakaian_daya];
+      var query = 'insert into perangkat (id_perangkat, id_user, id_rumah, pemakaian_daya) values (?, ?, ?, ?, ?)';
 
       con.query(query, creds, function(err, result) {
         con.release();
@@ -30,8 +30,8 @@ function Perangkat() {
 
   this.update = function(req, res) {
     connection.acquire(function(err, con) {
-      var creds = [req.nama_perangkat, req.id_perangkat];
-      var query = 'update perangkat set nama_perangkat = ? where id_perangkat = ?';
+      var creds = [req.pemakaian_daya, req.id_perangkat];
+      var query = 'update perangkat set pemakaian_daya = ? where id_perangkat = ?';
 
       con.query(query, creds, function(err, result) {
         con.release();
@@ -61,4 +61,4 @@ function Perangkat() {
 
 }
 
-module.exports = new Perangkat();
+module.exports = new Data();
