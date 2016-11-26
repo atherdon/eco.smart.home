@@ -1,2 +1,2 @@
-# todo-app
-Simple TODO list app using Node.js, Express and MySQL
+# eco smart home
+Node JS Back End for Eco Smart Home
