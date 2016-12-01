@@ -6,7 +6,12 @@ function Data() {
     connection.acquire(function(err, con) {
       con.query('select * from data', function(err, result) {
         con.release();
-        res.send(result);
+        var objs = [];
+        for (var i = 0;i < result.length; i++) {
+            objs.push({'pemakaian_daya': result[i].pemakaian_daya});
+        }
+        res.send(JSON.stringify(objs));
+        // res.send(result.pemakaian_daya);
       });
     });
   };

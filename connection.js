@@ -1,14 +1,14 @@
-var mysql = require('mysql');
+﻿var mysql = require('mysql');
 
 function Connection() {
   this.pool = null;
 
   this.init = function() {
     this.pool = mysql.createPool({
-      host: 'localhost',
-      user: 'root',
-      password: 'root',
-      database: 'iot_pln'
+      host: 'agungdp.agri.web.id',
+      user: 'agungdp_iotpln',
+      password: 'iotpln2016',
+      database: 'agungdp_iotpln'
     });
   };
 
